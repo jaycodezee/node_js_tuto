@@ -1,27 +1,28 @@
-import express from 'express';
-import fetch from 'node-fetch';
-import path from 'path';
-import { fileURLToPath } from 'url';
+const express = require('express');
+const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const dirname = __dirname;
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(dirname, 'public')));
 
 app.get('/api/quotes', async (req, res) => {
     try {
-        const response = await fetch('https://type.fit/api/quotes');
+        const fetch = await import('node-fetch');
+        const response = await fetch.default('https://type.fit/api/quotes');
+        if (!response.ok) {
+            throw new Error('Failed to fetch quotes');
+        }
         const quotes = await response.json();
         res.json(quotes);
     } catch (error) {
+        console.error('Error fetching quotes:', error.message);
         res.status(500).json({ error: 'Failed to fetch quotes' });
     }
 });
 
 app.listen(PORT, () => {
-    // console.log(`Server is running on port ${PORT}`);
-    console.log(`Server is running on port At   http://localhost:3000/`);
+    console.log(`Server is running on http://localhost:${PORT}/`);
 });
