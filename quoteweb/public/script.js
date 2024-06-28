@@ -19,6 +19,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         
         setTimeout(async () => {
             const quotes = await fetchQuotes();
+            quotes.forEach(quote => {
+                if (quote.author && quote.author.endsWith(', type.fit')) {
+                    quote.author = quote.author.replace(', type.fit', '');
+                }
+            });
             if (quotes.length > 0) {
                 const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
                 quoteText.textContent = randomQuote.text;
@@ -27,7 +32,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 quoteText.textContent = 'Failed to load quotes';
                 quoteAuthor.textContent = '';
             }
-        }, 500); // 2 seconds delay
+        }, 500); 
     }
 
     newQuoteBtn.addEventListener('click', displayNewQuote);
