@@ -1,0 +1,88 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #2C3E50;
+    font-family: 'Arial', sans-serif;
+}
+
+.quote-card {
+    background-color: white;
+    width: 90%;
+    max-width: 600px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    position: relative;
+}
+
+.quote-content {
+    padding: 30px;
+    position: relative;
+}
+
+.quote-mark {
+    font-size: 50px;
+    color: #CCCCCC;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+.quote-text {
+    font-size: 24px;
+    color: #333333;
+    margin-left: 60px;
+    font-style: italic;
+}
+
+.quote-author {
+    font-size: 18px;
+    color: #555555;
+    margin-top: 20px;
+    text-align: right;
+}
+
+.twitter-icon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: #1DA1F2;
+    font-size: 24px;
+}
+
+.quote-footer {
+    background-color: #2980B9;
+    text-align: center;
+    padding: 10px;
+}
+
+.new-quote-btn {
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.new-quote-btn:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+    .quote-text {
+        font-size: 18px;
+        margin-left: 50px;
+    }
+    
+    .quote-author {
+        font-size: 16px;
+    }
+}
