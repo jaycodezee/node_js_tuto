@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Display</title>
+    <style>
+        #image-container {
+            text-align: center;
+        }
+        img {
+            max-width: 80%;
+            height: auto;
+        }
+        .navigation {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .nav-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .nav-button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <h1>Image Display</h1>
+    <div id="image-container">
+        <img id="current-image" src="" alt="No image available">
+    </div>
+    <div class="navigation">
+        <button id="prev-button" class="nav-button" onclick="prevImage()" disabled>Previous</button>
+        <button id="next-button" class="nav-button" onclick="nextImage()">Next</button>
+    </div>
+    <script>
+        let images = [];
+        let currentIndex = 0;
+
+        async function fetchImages() {
+            const response = await fetch('/images');
+            if (response.ok) {
+                images = await response.json();
+                if (images.length > 0) {
+                    displayImage(currentIndex);
+                } else {
+                    document.getElementById('current-image').alt = 'No images available';
+                }
+                updateButtons();
+            } else {
+                console.error('Error fetching images:', response.statusText);
+            }
+        }
+
+        function displayImage(index) {
+            const image = images[index];
+            const imgElement = document.getElementById('current-image');
+            imgElement.src = `/image/${image.id}`;
+            imgElement.alt = image.name;
+        }
+
+        function updateButtons() {
+            document.getElementById('prev-button').disabled = currentIndex === 0;
+            document.getElementById('next-button').disabled = currentIndex === images.length - 1;
+        }
+
+        function nextImage() {
+            if (currentIndex < images.length - 1) {
+                currentIndex++;
+                displayImage(currentIndex);
+                updateButtons();
+            }
+        }
+
+        function prevImage() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                displayImage(currentIndex);
+                updateButtons();
+            }
+        }
+
+        fetchImages();
+    </script>
+</body>
+</html>
